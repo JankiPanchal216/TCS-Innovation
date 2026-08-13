@@ -1,8 +1,17 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from app.db.session import create_pool, close_pool
-from app.routes import books
+from app.routes import books, learning_paths
 
 app = FastAPI(title="LibraAI API", description="AI-powered library recommendation platform")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.on_event("startup")
 async def startup_event():
@@ -16,6 +25,7 @@ async def shutdown_event():
 
 # Include routers
 app.include_router(books.router)
+app.include_router(learning_paths.router)
 
 @app.get("/")
 def read_root():
