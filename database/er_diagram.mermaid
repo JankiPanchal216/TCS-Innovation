@@ -1,0 +1,40 @@
+erDiagram
+    users ||--o{ student_profiles : "1:1"
+    users ||--o{ book_interactions : "1:N"
+    users ||--o{ recommendations : "1:N"
+    users ||--o{ recommendation_feedback : "1:N"
+    users ||--o{ search_queries : "1:N"
+    users ||--o{ ai_requests : "1:N"
+    users ||--o{ documents : "1:N"
+    
+    student_profiles ||--o{ student_courses : "1:N"
+    student_profiles ||--o{ borrowings : "1:N"
+    
+    departments ||--o{ courses : "1:N"
+    courses ||--o{ student_courses : "1:N"
+    courses ||--o{ course_books : "1:N"
+    
+    books ||--o{ book_authors : "1:N"
+    books ||--o{ book_categories : "1:N"
+    books ||--o{ course_books : "1:N"
+    books ||--o{ inventory : "1:N"
+    books ||--o{ borrowings : "1:N"
+    books ||--o{ book_interactions : "1:N"
+    books ||--o{ recommendations : "1:N"
+    books ||--o{ acquisition_recommendations : "1:N"
+    
+    authors ||--o{ book_authors : "1:N"
+    categories ||--o{ book_categories : "1:N"
+    categories ||--o{ acquisition_recommendations : "1:N"
+    categories ||--o{ categories : "self-referential"
+    
+    recommendations ||--o{ recommendation_feedback : "1:N"
+    
+    ai_models ||--o{ ai_requests : "1:N"
+    ai_models ||--o{ acquisition_recommendations : "1:N"
+    ai_models ||--o{ learning_paths : "1:N"
+    
+    learning_paths ||--o{ learning_path_items : "1:N"
+    books ||--o{ learning_path_items : "1:N"
+    
+    documents ||--o{ document_chunks : "1:N"
