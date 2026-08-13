@@ -1,0 +1,16 @@
+-- ============================================================================
+-- Phase 2B: Embeddings & Semantic Vector Search Index
+-- ============================================================================
+
+-- NOTE: 
+-- The vector index (HNSW) is generated dynamically by the EmbeddingService 
+-- once the dimension of the embedding model is known at runtime.
+--
+-- This migration script exists to document the strategy used.
+-- The actual command executed is conceptually:
+--
+-- CREATE INDEX IF NOT EXISTS books_embedding_idx_{ACTUAL_DIM} 
+-- ON books 
+-- USING hnsw ((embedding::vector({ACTUAL_DIM})) vector_cosine_ops);
+--
+-- No static index creation is performed in this file to avoid assuming the dimension.

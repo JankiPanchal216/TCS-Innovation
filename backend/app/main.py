@@ -23,11 +23,15 @@ async def shutdown_event():
     # Close connection pool
     await close_pool()
 
+from app.routes import search, recommendations
+
 # Include routers
 app.include_router(books.router)
 app.include_router(learning_paths.router)
 app.include_router(copilot.router)
 app.include_router(inventory.router)
+app.include_router(search.router, prefix="/api/search", tags=["search"])
+app.include_router(recommendations.router, prefix="/api/recommendations", tags=["recommendations"])
 
 @app.get("/")
 def read_root():
