@@ -43,7 +43,7 @@ class KeywordSearchService:
                     ) as categories,
                     b.thumbnail_url as thumbnail,
                     b.difficulty,
-                    b.is_active as availability,
+                    COALESCE((SELECT SUM(available_copies) FROM inventory WHERE book_id = b.id), 0) as available_copies,
                     ts_rank_cd(b.search_vector, websearch_to_tsquery('english', $1)) AS keyword_score
                 FROM books b
                 WHERE b.search_vector @@ websearch_to_tsquery('english', $1)
@@ -59,7 +59,7 @@ class KeywordSearchService:
                     param_idx += 1
                     
                 if 'available_only' in filters and filters['available_only']:
-                    sql += f" AND b.is_active = true"
+                    sql += f" AND (SELECT SUM(available_copies) FROM inventory WHERE book_id = b.id) > 0"
                     
             sql += f" ORDER BY keyword_score DESC"
             sql += f" LIMIT ${param_idx}"
@@ -76,7 +76,7 @@ class KeywordSearchService:
                     "categories": r["categories"] or [],
                     "thumbnail": r["thumbnail"],
                     "difficulty": r["difficulty"],
-                    "available_copies": 1 if r["availability"] else 0,
+                    "available_copies": r["available_copies"],
                     "keyword_score": round(float(r["keyword_score"]), 4),
                     "rank": idx + 1
                 })

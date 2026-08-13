@@ -1,5 +1,17 @@
 $ErrorActionPreference = 'Stop'
 
+# Find psql
+$psql_cmd = "psql"
+if (!(Get-Command "psql" -ErrorAction SilentlyContinue)) {
+    $psql_path = Get-ChildItem -Path "C:\Program Files\PostgreSQL" -Filter psql.exe -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty FullName
+    if ($psql_path) {
+        $psql_cmd = "& `"$psql_path`""
+    } else {
+        Write-Error "psql not found in PATH or C:\Program Files\PostgreSQL"
+        exit 1
+    }
+}
+
 # Load .env variables if the file exists
 if (Test-Path ".env") {
     Write-Host "Loading environment variables from .env"
@@ -35,7 +47,7 @@ Write-Host "Applying migrations..."
 foreach ($migration in $migrations) {
     if (Test-Path $migration) {
         Write-Host "Running $migration"
-        psql -v ON_ERROR_STOP=1 -f $migration
+        Invoke-Expression "$psql_cmd -v ON_ERROR_STOP=1 -f $migration"
         if ($LASTEXITCODE -ne 0) {
             Write-Error "Failed to run $migration"
             exit 1
@@ -52,7 +64,7 @@ Write-Host "Migrations applied successfully."
 $seedFile = "seed.sql"
 if (Test-Path $seedFile) {
     Write-Host "Running seed script: $seedFile"
-    psql -v ON_ERROR_STOP=1 -f $seedFile
+    Invoke-Expression "$psql_cmd -v ON_ERROR_STOP=1 -f $seedFile"
     if ($LASTEXITCODE -ne 0) {
         Write-Error "Failed to run $seedFile"
         exit 1
