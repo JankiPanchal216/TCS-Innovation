@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from app.db.session import create_pool, close_pool
-from app.routes import books
+from app.routes import books, search, library, recommendations
 
 app = FastAPI(title="LibraAI API", description="AI-powered library recommendation platform")
 
@@ -16,9 +16,8 @@ async def shutdown_event():
 
 # Include routers
 app.include_router(books.router)
-from app.routes import search
 app.include_router(search.router, prefix="/api/search", tags=["search"])
-from app.routes import recommendations
+app.include_router(library.router)
 app.include_router(recommendations.router, prefix="/api/recommendations", tags=["recommendations"])
 
 @app.get("/")

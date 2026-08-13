@@ -55,7 +55,7 @@ class SemanticSearchService:
                     b.categories,
                     b.thumbnail_url as thumbnail,
                     b.difficulty,
-                    b.is_active as availability,
+                    COALESCE((SELECT SUM(available_copies) FROM inventory WHERE book_id = b.book_id), 0) as available_copies,
                     1 - (b.embedding <=> $1::vector) AS similarity
                 FROM (
                     SELECT 
@@ -88,7 +88,7 @@ class SemanticSearchService:
                     param_idx += 1
                     
                 if 'available_only' in filters and filters['available_only']:
-                    sql += f" AND b.is_active = true"
+                    sql += f" AND (SELECT SUM(available_copies) FROM inventory WHERE book_id = b.id) > 0"
                     
                 # Note: other filters like category/department could be added here
                 # checking against the arrays
@@ -108,7 +108,7 @@ class SemanticSearchService:
                     "categories": r["categories"] or [],
                     "thumbnail": r["thumbnail"],
                     "difficulty": r["difficulty"],
-                    "available_copies": 1 if r["availability"] else 0, # Simplify availability mapping
+                    "available_copies": r["available_copies"],
                     "similarity": round(float(r["similarity"]), 4)
                 })
                 

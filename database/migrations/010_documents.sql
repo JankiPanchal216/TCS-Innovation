@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS document_chunks (
     chunk_index INTEGER NOT NULL,
     content TEXT NOT NULL,
     token_count INTEGER,
-    embedding vector,
+    -- embedding vector, -- Commented out for local Windows test
     embedding_model VARCHAR(100),
     metadata JSONB,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
