@@ -1,0 +1,66 @@
+[
+  {
+    "query": "beginner cybersecurity books",
+    "relevant_categories": ["Cybersecurity", "Security"]
+  },
+  {
+    "query": "learn machine learning from scratch",
+    "relevant_categories": ["Machine Learning", "Artificial Intelligence"]
+  },
+  {
+    "query": "Python",
+    "relevant_categories": ["Programming", "Python"]
+  },
+  {
+    "query": "Operating Systems",
+    "relevant_categories": ["Operating Systems", "Computer Science"]
+  },
+  {
+    "query": "DBMS",
+    "relevant_categories": ["Databases", "DBMS"]
+  },
+  {
+    "query": "TCP/IP",
+    "relevant_categories": ["Networking", "Networks"]
+  },
+  {
+    "query": "I am new to cybersecurity",
+    "relevant_categories": ["Cybersecurity", "Security"]
+  },
+  {
+    "query": "books for learning AI from scratch",
+    "relevant_categories": ["Artificial Intelligence", "Machine Learning"]
+  },
+  {
+    "query": "I know Python and want to learn machine learning",
+    "relevant_categories": ["Machine Learning", "Artificial Intelligence", "Python"]
+  },
+  {
+    "query": "beginner books for database systems",
+    "relevant_categories": ["Databases", "DBMS"]
+  },
+  {
+    "query": "what should I read to understand network attacks?",
+    "relevant_categories": ["Cybersecurity", "Security", "Networking"]
+  },
+  {
+    "query": "Network Security",
+    "relevant_categories": ["Security", "Cybersecurity", "Networking"]
+  },
+  {
+    "query": "Artificial Intelligence",
+    "relevant_categories": ["Artificial Intelligence"]
+  },
+  {
+    "query": "I know networking and want to learn network attacks",
+    "relevant_categories": ["Security", "Cybersecurity"]
+  },
+  {
+    "query": "database fundamentals for university students",
+    "relevant_categories": ["Databases", "DBMS"]
+  },
+  {
+    "query": "books about TCP/IP networking",
+    "relevant_categories": ["Networking"]
+  }
+]
