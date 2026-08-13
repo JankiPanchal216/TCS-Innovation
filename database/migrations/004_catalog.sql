@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS books (
     -- AI/search fields
     searchable_text TEXT,
     -- Using the generic vector type without dimension limit to be flexible for MVP
-    embedding vector,
+    -- embedding vector, -- Commented out for local Windows test
     embedding_model VARCHAR(100),
     embedding_dimensions INTEGER,
     embedding_updated_at TIMESTAMPTZ,

@@ -1,4 +1,3 @@
-import pytest
 from app.services.recommendations.academic import AcademicScorer
 from app.services.recommendations.interests import InterestsScorer
 from app.services.recommendations.history import HistoryScorer
@@ -76,8 +75,8 @@ def test_cold_start():
 
 def test_scoring_weights():
     academic = AcademicScorer({"b1": 1.0})
-    interests = InterestsScorer(["A"])
-    history = HistoryScorer([{"categories": ["B"]}])
+    interests = InterestsScorer(["A", "C"])
+    history = HistoryScorer([{"categories": ["B"], "authors": ["Auth1"]}])
     collab = CollaborativeScorer({"b1": 1.0})
     pop = PopularityScorer({"b1": 1.0})
     hybrid = {"b1": 1.0}
@@ -85,7 +84,7 @@ def test_scoring_weights():
     scoring_service = ScoringService(hybrid, academic, interests, history, collab, pop)
     
     # Book b1 is a perfect match on everything
-    candidate = {"book_id": "b1", "categories": ["A", "B"], "available_copies": 1}
+    candidate = {"book_id": "b1", "categories": ["A", "B", "C"], "authors": ["Auth1"], "available_copies": 1}
     scored = scoring_service.score_candidates([candidate])
     
     # Total score should be exactly 1.0 (since it gets 1.0 on every sub-score)
@@ -125,3 +124,16 @@ def test_deterministic_ranking():
     run2 = scoring_service.score_candidates([c1, c2])
     
     assert run1 == run2
+
+if __name__ == "__main__":
+    print("Running tests...")
+    test_academic_scorer()
+    test_interests_scorer()
+    test_history_scorer()
+    test_collaborative_scorer()
+    test_cold_start()
+    test_scoring_weights()
+    test_diversity_reranker()
+    test_deterministic_ranking()
+    print("All tests passed successfully!")
+
