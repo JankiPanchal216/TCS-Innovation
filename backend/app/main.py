@@ -16,6 +16,8 @@ async def shutdown_event():
 
 # Include routers
 app.include_router(books.router)
+from app.routes import search
+app.include_router(search.router, prefix="/api/search", tags=["search"])
 
 @app.get("/")
 def read_root():
